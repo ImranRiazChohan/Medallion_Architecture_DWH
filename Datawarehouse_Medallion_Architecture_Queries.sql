@@ -125,5 +125,60 @@ CREATE TABLE silver_layer.erp_px_cat_g1v2 (
 );
 
 
+-- Working Golden Layer
 
+-- =============================================
+-- DIMENSION TABLE: dim_products
+-- =============================================
+CREATE TABLE gold_layer.dim_products (
+    product_key     INT          GENERATED ALWAYS AS IDENTITY,
+    product_id      INT,
+    product_no      INT,
+    product_name    VARCHAR(50),
+    category_id     VARCHAR(50),
+    category        VARCHAR(50),
+    sub_category    VARCHAR(50),
+    maintenance     VARCHAR(50),
+    product_cost    INT,
+    product_line    VARCHAR(50),
+    start_date      DATE,
 
+    CONSTRAINT pk_dim_products PRIMARY KEY (product_key)
+);
+
+-- =============================================
+-- DIMENSION TABLE: dim_customer
+-- =============================================
+CREATE TABLE gold_layer.dim_customer (
+    customer_key    INT          GENERATED ALWAYS AS IDENTITY,
+    customer_id     INT,
+    customer_no     VARCHAR(50),
+    first_name      VARCHAR(50),
+    last_name       VARCHAR(50),
+    country         VARCHAR(50),
+    marital_status  VARCHAR(50),
+    gender          VARCHAR(50),
+    birth_date      DATE,
+    created_date    TIMESTAMP,
+
+    CONSTRAINT pk_dim_customer PRIMARY KEY (customer_key)
+);
+
+-- =============================================
+-- FACT TABLE: fact_sales
+-- =============================================
+CREATE TABLE gold_layer.fact_sales (
+    order_no        VARCHAR(50)  NOT NULL,
+    product_key     INT,
+    customer_key    INT,
+    order_date      DATE,
+    shipping_date   DATE,
+    due_date        DATE,
+    sales_amount    INT,
+    quantity        INT,
+    price           INT,
+
+    CONSTRAINT pk_fact_sales  PRIMARY KEY (order_no),
+    CONSTRAINT fk_product     FOREIGN KEY (product_key)  REFERENCES gold_layer.dim_products (product_key),
+    CONSTRAINT fk_customer    FOREIGN KEY (customer_key) REFERENCES gold_layer.dim_customer (customer_key)
+);
