@@ -133,7 +133,7 @@ CREATE TABLE silver_layer.erp_px_cat_g1v2 (
 CREATE TABLE gold_layer.dim_products (
     product_key     INT          GENERATED ALWAYS AS IDENTITY,
     product_id      INT,
-    product_no      INT,
+    product_no      VARCHAR(50),
     product_name    VARCHAR(50),
     category_id     VARCHAR(50),
     category        VARCHAR(50),
@@ -176,9 +176,13 @@ CREATE TABLE gold_layer.fact_sales (
     due_date        DATE,
     sales_amount    INT,
     quantity        INT,
-    price           INT,
-
-    CONSTRAINT pk_fact_sales  PRIMARY KEY (order_no),
-    CONSTRAINT fk_product     FOREIGN KEY (product_key)  REFERENCES gold_layer.dim_products (product_key),
-    CONSTRAINT fk_customer    FOREIGN KEY (customer_key) REFERENCES gold_layer.dim_customer (customer_key)
+    price           INT
 );
+
+
+
+drop table gold_layer.dim_customer,gold_layer.fact_sales, gold_layer.dim_products; 
+truncate table gold_layer.dim_customer,gold_layer.fact_sales,gold_layer.dim_products; 
+
+select count(*) from gold_layer.fact_sales;
+60398
