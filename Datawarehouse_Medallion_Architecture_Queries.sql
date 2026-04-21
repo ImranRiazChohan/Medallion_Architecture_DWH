@@ -183,6 +183,3 @@ CREATE TABLE gold_layer.fact_sales (
 
 drop table gold_layer.dim_customer,gold_layer.fact_sales, gold_layer.dim_products; 
 truncate table gold_layer.dim_customer,gold_layer.fact_sales,gold_layer.dim_products; 
-
-select count(*) from gold_layer.fact_sales;
-60398

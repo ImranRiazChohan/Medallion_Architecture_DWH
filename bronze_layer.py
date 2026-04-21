@@ -2,23 +2,37 @@
 import polars as pl
 import psycopg2
 from psycopg2.extras import execute_values
+import os
+from pathlib import Path
+
+# ── Base path — local Windows pe bhi kaam karega, Docker mein bhi ────────────
+BASE_DIR = Path(os.getenv("ETL_BASE_DIR", Path(__file__).parent))
 
 
 def db_connection():
-    conn=psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="localhost",port="5432")
+    conn=psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="192.168.80.121",port="5432")
     curr=conn.cursor()
     return curr,conn
 
 def main():
     curr,conn=db_connection()
 
-    customer_df=pl.read_csv("./source_crm/cust_info.csv")
-    product_df=pl.read_csv("./source_crm/prd_info.csv")
-    sales_df=pl.read_csv("./source_crm/sales_details.csv")
+    # customer_df=pl.read_csv(r"C:\Users\Imran\Desktop\Medallion_Architecture_DWH\source_crm\cust_info.csv")
+    # product_df=pl.read_csv(r"C:\Users\Imran\Desktop\Medallion_Architecture_DWH\source_crm\prd_info.csv")
+    # sales_df=pl.read_csv(r"C:\Users\Imran\Desktop\Medallion_Architecture_DWH\source_crm\sales_details.csv")
 
-    erp_cust_df=pl.read_csv("./source_erp/CUST_AZ12.csv")
-    erp_loc_df=pl.read_csv("./source_erp/LOC_A101.csv")
-    erp_cat_df=pl.read_csv("./source_erp/PX_CAT_G1V2.csv")
+    # erp_cust_df=pl.read_csv(r"C:\Users\Imran\Desktop\Medallion_Architecture_DWH\source_erp\CUST_AZ12.csv")
+    # erp_loc_df=pl.read_csv(r"C:\Users\Imran\Desktop\Medallion_Architecture_DWH\source_erp\LOC_A101.csv")
+    # erp_cat_df=pl.read_csv(r"C:\Users\Imran\Desktop\Medallion_Architecture_DWH\source_erp\PX_CAT_G1V2.csv")
+
+    # ── CSV Files Load ────────────────────────────────────────────────────────
+    customer_df = pl.read_csv(BASE_DIR / "source_crm" / "cust_info.csv")
+    product_df  = pl.read_csv(BASE_DIR / "source_crm" / "prd_info.csv")
+    sales_df    = pl.read_csv(BASE_DIR / "source_crm" / "sales_details.csv")
+
+    erp_cust_df = pl.read_csv(BASE_DIR / "source_erp" / "CUST_AZ12.csv")
+    erp_loc_df  = pl.read_csv(BASE_DIR / "source_erp" / "LOC_A101.csv")
+    erp_cat_df  = pl.read_csv(BASE_DIR / "source_erp" / "PX_CAT_G1V2.csv")
 
     # insert Customer information Into Bronze Layer
     customer_data=customer_df.rows()

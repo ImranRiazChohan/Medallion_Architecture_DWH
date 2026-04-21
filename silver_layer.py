@@ -18,7 +18,7 @@ from datetime import datetime, date
 
 @contextmanager
 def get_conn():
-    conn = psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="localhost",port="5432")
+    conn = psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="192.168.80.121",port="5432")
     try:
         yield conn
         conn.commit()
