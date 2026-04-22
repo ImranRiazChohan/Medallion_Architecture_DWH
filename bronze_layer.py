@@ -11,7 +11,7 @@ sys.path.append('/opt/airflow/medallion_project')
 
 
 def db_connection():
-    conn=psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="192.168.80.121",port="5432")
+    conn=psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="192.168.80.101",port="5432")
     curr=conn.cursor()
     return curr,conn
 
