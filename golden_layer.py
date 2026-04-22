@@ -96,6 +96,8 @@ def main():
     print(f"✅ {len(product_dim)} rows insert ho gaye 'gold_layer.dim_products' mein")
 
     conn.commit()
+    curr.close()
+    conn.close()
 
     # INSERT FACT SALES 
 
@@ -113,7 +115,8 @@ def main():
 
     conn.commit()
 
-    return 0
+    curr.close()
+    conn.close()
 
 if __name__=='__main__':
     main()

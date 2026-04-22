@@ -7,8 +7,6 @@ import sys
 from pathlib import Path
 
 
-sys.path.append('/opt/airflow/medallion_project')
-
 
 def db_connection():
     conn=psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="192.168.80.101",port="5432")
@@ -16,17 +14,32 @@ def db_connection():
     return curr,conn
 
 def main():
+
     curr,conn=db_connection()
+    # FOR LOCAL DEPLOYMENT
+    customer_df=pl.read_csv("./source_crm/cust_info.csv")
+    product_df=pl.read_csv("./source_crm/prd_info.csv")
+    sales_df=pl.read_csv("./source_crm/sales_details.csv")
 
-    customer_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/cust_info.csv")
-    product_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/prd_info.csv")
-    sales_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/sales_details.csv")
+    erp_cust_df=pl.read_csv("./source_erp/CUST_AZ12.csv")
+    erp_loc_df=pl.read_csv("./source_erp/LOC_A101.csv")
+    erp_cat_df=pl.read_csv("./source_erp/PX_CAT_G1V2.csv")
 
-    erp_cust_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/CUST_AZ12.csv")
-    erp_loc_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/LOC_A101.csv")
-    erp_cat_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/PX_CAT_G1V2.csv")
 
-   
+    # FOR AIRFLOW DEPLOYMENT
+
+    # sys.path.append('/opt/airflow/medallion_project')
+
+    # customer_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/cust_info.csv")
+    # product_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/prd_info.csv")
+    # sales_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/sales_details.csv")
+
+    # erp_cust_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/CUST_AZ12.csv")
+    # erp_loc_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/LOC_A101.csv")
+    # erp_cat_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/PX_CAT_G1V2.csv")
+
+
+
 
     # insert Customer information Into Bronze Layer
     customer_data=customer_df.rows()
@@ -122,11 +135,9 @@ def main():
 
     conn.commit()
     print(f"✅ {len(erp_cat_data)} rows insert ho gaye 'bronze_layer.erp_px_cat_g1v2 ' mein")
-    # ── 5. Connection band karo ───────────────────────────────────────────────────
+
     curr.close()
     conn.close()
-
-    return 0
 
 if __name__=='__main__':
 

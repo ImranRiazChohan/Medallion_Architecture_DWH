@@ -4,8 +4,6 @@ from airflow.operators.python import PythonOperator
 import sys
 import os
 
-# Add the Medallion_Architecture_DWH directory to the Python path to import modules
-# sys.path.append(r'c:\Users\Imran\Desktop\Medallion_Architecture_DWH')
 sys.path.append('/opt/airflow/medallion_project')
 
 from bronze_layer import main as bronze_main
@@ -33,11 +31,8 @@ dag = DAG(
 def run_bronze_layer():
     """Function to run the bronze layer ingestion."""
     try:
-        result = bronze_main()
-        if result == 0:
-            print("Bronze layer ingestion completed successfully.")
-        else:
-            raise Exception("Bronze layer ingestion failed.")
+        bronze_main()
+        print("Bronze layer ingestion completed successfully.")
     except Exception as e:
         print(f"Error during bronze layer ingestion: {e}")
         raise
@@ -54,11 +49,8 @@ def run_silver_layer():
 def run_golden_layer():
     """Function to run the golden layer aggregation."""
     try:
-        result = golden_main()
-        if result == 0:
-            print("Golden layer aggregation completed successfully.")
-        else:
-            raise Exception("Golden layer aggregation failed.")
+        golden_main()
+        print("Golden layer aggregation completed successfully.")
     except Exception as e:
         print(f"Error during golden layer aggregation: {e}")
         raise
