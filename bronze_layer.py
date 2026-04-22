@@ -16,27 +16,27 @@ def db_connection():
 def main():
 
     curr,conn=db_connection()
-    # FOR LOCAL DEPLOYMENT
-    customer_df=pl.read_csv("./source_crm/cust_info.csv")
-    product_df=pl.read_csv("./source_crm/prd_info.csv")
-    sales_df=pl.read_csv("./source_crm/sales_details.csv")
+    # # FOR LOCAL DEPLOYMENT
+    # customer_df=pl.read_csv("./source_crm/cust_info.csv")
+    # product_df=pl.read_csv("./source_crm/prd_info.csv")
+    # sales_df=pl.read_csv("./source_crm/sales_details.csv")
 
-    erp_cust_df=pl.read_csv("./source_erp/CUST_AZ12.csv")
-    erp_loc_df=pl.read_csv("./source_erp/LOC_A101.csv")
-    erp_cat_df=pl.read_csv("./source_erp/PX_CAT_G1V2.csv")
+    # erp_cust_df=pl.read_csv("./source_erp/CUST_AZ12.csv")
+    # erp_loc_df=pl.read_csv("./source_erp/LOC_A101.csv")
+    # erp_cat_df=pl.read_csv("./source_erp/PX_CAT_G1V2.csv")
 
 
     # FOR AIRFLOW DEPLOYMENT
 
-    # sys.path.append('/opt/airflow/medallion_project')
+    sys.path.append('/opt/airflow/medallion_project')
 
-    # customer_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/cust_info.csv")
-    # product_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/prd_info.csv")
-    # sales_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/sales_details.csv")
+    customer_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/cust_info.csv")
+    product_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/prd_info.csv")
+    sales_df=pl.read_csv("/opt/airflow/medallion_project/source_crm/sales_details.csv")
 
-    # erp_cust_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/CUST_AZ12.csv")
-    # erp_loc_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/LOC_A101.csv")
-    # erp_cat_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/PX_CAT_G1V2.csv")
+    erp_cust_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/CUST_AZ12.csv")
+    erp_loc_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/LOC_A101.csv")
+    erp_cat_df=pl.read_csv("/opt/airflow/medallion_project/source_erp/PX_CAT_G1V2.csv")
 
 
 
