@@ -12,7 +12,7 @@ def db_connection():
 
 def get_data_from_silver_layer(table_name:str):
     
-    uri = "postgresql://postgres:imran@localhost:5432/Datawarehouse"
+    uri = "postgresql://postgres:imran@192.168.80.101:5432/Datawarehouse"
     query = f"""SELECT * FROM silver_layer.{table_name}"""
 
     df = pl.read_database_uri(query=query, uri=uri, engine="connectorx")
@@ -20,7 +20,7 @@ def get_data_from_silver_layer(table_name:str):
 
 def get_data_from_golden_layer(table_name:str):
     
-    uri = "postgresql://postgres:imran@localhost:5432/Datawarehouse"
+    uri = "postgresql://postgres:imran@192.168.80.101:5432/Datawarehouse"
     query = f"""SELECT * FROM gold_layer.{table_name}"""
 
     df = pl.read_database_uri(query=query, uri=uri, engine="connectorx")
