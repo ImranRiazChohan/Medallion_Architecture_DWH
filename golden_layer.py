@@ -1,6 +1,9 @@
 import polars as pl
 import psycopg2
 from psycopg2.extras import execute_values
+import sys
+
+sys.path.append('/opt/airflow/medallion_project')
 
 def db_connection():
     conn=psycopg2.connect(dbname="Datawarehouse",user="postgres",password="imran",host="192.168.80.121",port="5432")
